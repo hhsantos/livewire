@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .logo-text { font-family: Arial, sans-serif; font-weight: bold; }
+    </style>
+    <g fill="#0A192F">
+        <!-- Airplane silhouette -->
+        <path d="M250 150 C250 150, 180 160, 150 180 C120 200, 100 220, 100 250 C100 280, 120 300, 150 320 C180 340, 250 350, 250 350 L350 300 L380 280 L350 260 L250 150Z"/>
+        <!-- Text ALA2 -->
+        <text x="100" y="400" class="logo-text" font-size="80">ALA2</text>
+        <!-- Text CLUB DE VUELO -->
+        <text x="100" y="450" class="logo-text" font-size="40">CLUB DE VUELO</text>
+    </g>
+</svg>
