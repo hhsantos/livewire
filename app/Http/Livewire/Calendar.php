@@ -24,6 +24,7 @@ class Calendar extends Component
     public $editingReservation = null;
     public $showDeleteConfirmation = false;
     public $currentDate;
+    public $showDailyView = false;
     
     // Nuevas propiedades para búsqueda y filtrado
     public $searchQuery = '';
@@ -63,8 +64,8 @@ class Calendar extends Component
     public function openReservationModal($date, $reservationId = null)
     {
         $this->selectedDate = Carbon::parse($date);
-        $this->startTime = null;
-        $this->endTime = null;
+        $this->startTime = now()->format('H');
+        $this->endTime = now()->addHour()->format('H');
         $this->notes = '';
         $this->editingReservation = null;
 
@@ -72,8 +73,8 @@ class Calendar extends Component
             $reservation = Reservation::find($reservationId);
             if ($reservation && $reservation->user_id === Auth::id()) {
                 $this->editingReservation = $reservation;
-                $this->startTime = Carbon::parse($reservation->start_time)->format('H:i');
-                $this->endTime = Carbon::parse($reservation->end_time)->format('H:i');
+                $this->startTime = Carbon::parse($reservation->start_time)->format('H');
+                $this->endTime = Carbon::parse($reservation->end_time)->format('H');
                 $this->notes = $reservation->notes;
             }
         }
@@ -85,6 +86,21 @@ class Calendar extends Component
     {
         $this->showReservationModal = false;
         $this->resetReservationForm();
+    }
+
+    public function viewDailyCalendar($date)
+    {
+        logger()->info('Calendar - Received date:', ['date' => $date]);
+        $this->selectedDate = Carbon::parse($date)->format('Y-m-d');
+        logger()->info('Calendar - Formatted date:', ['date' => $this->selectedDate]);
+        $this->showDailyView = true;
+        $this->dispatch('setDailyDate', date: $this->selectedDate);
+    }
+
+    public function closeDailyView()
+    {
+        $this->showDailyView = false;
+        $this->dispatch('resetDailyCalendar');
     }
 
     private function resetReservationForm()

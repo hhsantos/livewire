@@ -58,7 +58,7 @@
                             <div class="h-[120px] relative">
                                 <div class="p-1 border-b {{ $day->month === $currentDate->month ? 'hover:bg-blue-50 cursor-pointer' : '' }}" 
                                      @if($day->month === $currentDate->month)
-                                        wire:click="openReservationModal('{{ $day->format('Y-m-d') }}')" 
+                                        wire:click="viewDailyCalendar('{{ $day->format('Y-m-d') }}')" 
                                      @endif>
                                     <span class="text-sm {{ $day->isToday() ? 'bg-blue-500 text-white rounded-full w-6 h-6 inline-flex items-center justify-center' : ($day->month !== $currentDate->month ? 'text-gray-400' : '') }}">
                                         {{ $day->format('j') }}
@@ -114,13 +114,21 @@
 
                 <div class="mb-4">
                     <label for="start_time" class="block text-sm font-medium text-gray-700 mb-2">Hora de inicio</label>
-                    <input wire:model="startTime" type="time" id="start_time" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <select wire:model="startTime" id="start_time" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        @for ($i = 0; $i < 24; $i++)
+                            <option value="{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}">{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}:00</option>
+                        @endfor
+                    </select>
                     @error('startTime') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
                 <div class="mb-4">
                     <label for="end_time" class="block text-sm font-medium text-gray-700 mb-2">Hora de fin</label>
-                    <input wire:model="endTime" type="time" id="end_time" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <select wire:model="endTime" id="end_time" class="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        @for ($i = 0; $i < 24; $i++)
+                            <option value="{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}">{{ str_pad($i, 2, '0', STR_PAD_LEFT) }}:00</option>
+                        @endfor
+                    </select>
                     @error('endTime') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
 
@@ -160,6 +168,20 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+        @endif
+
+        <!-- Vista Diaria -->
+        @if($showDailyView)
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div class="relative mx-auto p-4 w-full max-w-6xl bg-white shadow-2xl rounded-lg mt-8">
+                <button wire:click="closeDailyView" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+                @livewire('daily-calendar', ['selectedDate' => $selectedDate], key($selectedDate))
             </div>
         </div>
         @endif
