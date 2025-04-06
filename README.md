@@ -11,10 +11,108 @@ Sistema de reservas de vuelo desarrollado con Laravel y Livewire, que permite a 
 ### Características Principales
 
 - Calendario mensual interactivo
+  - Navegación entre meses
+  - Vista general de reservas
+  - Acceso rápido a la vista diaria
+- Vista diaria detallada con bloques horarios
+  - Visualización de 24 horas
+  - Reservas por hora
+  - Prevención de solapamientos
+  - Edición y eliminación de reservas propias
+  - Navegación entre días
+  - Información detallada de cada reserva
 - Sistema CRUD completo para reservas
+  - Creación mediante modal interactivo
+  - Validación en tiempo real
+  - Restricción de acceso por usuario
+  - Notas y comentarios en reservas
 - Autenticación de usuarios
+  - Control de acceso basado en roles
+  - Protección de rutas
+  - Gestión de permisos por reserva
 - Interfaz reactiva con Livewire
+  - Actualizaciones en tiempo real
+  - Sin recarga de página
+  - Validación instantánea
 - Diseño responsive con Tailwind CSS
+  - Adaptable a todos los dispositivos
+  - UI/UX moderna y limpia
+  - Componentes reutilizables
+
+## Estructura del Proyecto
+
+### Componentes Principales
+
+- `Calendar.php`: Componente principal del calendario
+  - Gestiona la vista mensual
+  - Coordina la navegación entre vistas
+  - Maneja eventos globales
+
+- `DailyCalendar.php`: Componente de vista diaria
+  - Gestiona las reservas por hora
+  - Implementa la lógica de solapamiento
+  - Maneja el modal de reservas
+
+### Base de Datos
+
+Tablas principales:
+
+- `users`: Almacena información de usuarios
+- `reservations`: Gestiona las reservas
+  - `user_id`: Propietario de la reserva
+  - `reservation_date`: Fecha de la reserva
+  - `start_time`: Hora de inicio
+  - `end_time`: Hora de finalización
+  - `notes`: Notas adicionales
+
+## Uso del Sistema
+
+### Navegación
+
+1. Vista Mensual
+   - Click en cualquier día para ver detalle
+   - Navegación entre meses con flechas
+   - Indicador visual de días con reservas
+
+2. Vista Diaria
+   - Bloques horarios de 1 hora
+   - Click en bloque vacío para nueva reserva
+   - Click en reserva existente para editar
+
+### Gestión de Reservas
+
+1. Crear Reserva
+   - Seleccionar hora de inicio y fin
+   - Añadir notas opcionales
+   - Sistema previene solapamientos
+
+2. Editar/Eliminar Reserva
+   - Solo disponible para el propietario
+   - Validación de permisos automática
+   - Confirmación para eliminar
+
+## Consideraciones Técnicas
+
+### Seguridad
+
+- Validación de permisos en backend
+- Protección contra CSRF
+- Sanitización de inputs
+- Validación de fechas y horas
+
+### Rendimiento
+
+- Carga lazy de componentes
+- Caché de consultas frecuentes
+- Optimización de consultas SQL
+- Minimización de llamadas al servidor
+
+### Mantenimiento
+
+- Logs detallados de operaciones
+- Código documentado
+- Tests automatizados
+- Control de versiones
 
 ## Requisitos
 
