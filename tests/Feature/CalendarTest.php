@@ -29,7 +29,7 @@ class CalendarTest extends TestCase
             ->set('startTime', $startTime)
             ->set('endTime', $endTime)
             ->set('notes', $notes)
-            ->call('createReservation');
+            ->call('saveReservation');
 
         $this->assertDatabaseHas('reservations', [
             'user_id' => $user->id,
@@ -67,7 +67,7 @@ class CalendarTest extends TestCase
             ->set('startTime', $newStartTime)
             ->set('endTime', $newEndTime)
             ->set('notes', $newNotes)
-            ->call('createReservation');
+            ->call('saveReservation');
 
         $updatedReservation = Reservation::find($reservation->id);
         $this->assertEquals($newStartTime, $updatedReservation->start_time->format('H:i'));
@@ -98,7 +98,7 @@ class CalendarTest extends TestCase
             ->set('startTime', '14:00')
             ->set('endTime', '15:00')
             ->set('notes', 'Attempted update')
-            ->call('createReservation');
+            ->call('saveReservation');
 
         // Verificar que la reserva no cambió
         $unchangedReservation = Reservation::find($reservation->id);
