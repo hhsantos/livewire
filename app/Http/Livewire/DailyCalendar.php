@@ -17,5 +17,23 @@ class DailyCalendar extends Component
     public $endTime;
     public $notes;
     public $editingReservationId = null;
-    // ... (resto del archivo)
+
+    // Constantes para formatos de fecha/hora
+    const DATE_FORMAT = 'Y-m-d';
+    const TIME_FORMAT = 'H:i';
+    const DB_TIME_FORMAT = 'Y-m-d H:i:s';
+
+    public function mount($selectedDate = null)
+    {
+        $this->selectedDate = $selectedDate ?? now()->format(self::DATE_FORMAT);
+        $this->reservations = collect();
+        $this->initializeHours();
+    }
+
+    // ... (resto de métodos y lógica)
+
+    public function render()
+    {
+        return view('livewire.daily-calendar');
+    }
 }
